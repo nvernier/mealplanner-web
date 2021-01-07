@@ -1,5 +1,5 @@
-# mevn-stack
-MEVN: MongoDB-Express-Vue.js-Node.js stack 'template' with authentication
+# Mealplanner
+Mealplanner web application
 
 ## Run it
 1. 
