@@ -7,7 +7,7 @@ services:
                 uid: ${NODE_UID}
             context: ./docker-compose/backend
             dockerfile: Dockerfile
-        container_name: app-backend
+        container_name: mealplanner-backend
         depends_on:
             - db
         working_dir: /var/www/app
@@ -17,7 +17,7 @@ services:
         volumes:
             - ./app/backend:/var/www/app
         networks:
-            - app
+            - mealplanner
 
     frontend:
         build:
@@ -26,7 +26,7 @@ services:
                 uid: ${NODE_UID}
             context: ./docker-compose/frontend
             dockerfile: Dockerfile
-        container_name: app-frontend
+        container_name: mealplanner-frontend
         depends_on:
             - db
         working_dir: /var/www/app
@@ -36,11 +36,11 @@ services:
         volumes:
             - ./app/frontend:/var/www/app
         networks:
-            - app
+            - mealplanner
 
     db:
         image: mongo:4.4-bionic
-        container_name: app-db
+        container_name: mealplanner-db
         volumes:
             - ./docker-compose/mongodb/initdb:/docker-entrypoint-initdb.d
             - ./docker-compose/mongodb/data:/data/db
@@ -48,11 +48,11 @@ services:
             MONGO_INITDB_ROOT_USERNAME: ${DB_ADMIN_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${DB_ADMIN_PASSWORD}
         networks:
-            - app
+            - mealplanner
 
     admin:
         image: mongo-express
-        container_name: app-admin
+        container_name: mealplanner-admin
         depends_on:
             - db
         ports:
@@ -64,9 +64,9 @@ services:
             ME_CONFIG_MONGODB_SERVER: db
             ME_CONFIG_MONGODB_PORT: 27017
         networks:
-            - app
+            - mealplanner
 
 
 networks:
-    app:
+    mealplanner:
         driver: bridge
